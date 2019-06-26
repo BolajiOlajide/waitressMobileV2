@@ -1,0 +1,3 @@
+rootProject.name = 'waitressMobileV2'
+
+include ':app'
