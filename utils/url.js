@@ -1,1 +1,1 @@
-export const MEAL_SESSIONS = '/meal-sessions/'
+export const START_MEAL_SESSION = '/meal_session/start/'

@@ -10,27 +10,29 @@ import Button from './Button';
 // utils
 import request from '../utils/request';
 import { MEAL_SESSIONS } from '../utils/url';
+import { is_before_midday } from '../utils/date';
 
 class LandingScreen extends Component {
   state = {
-    isTimeBeforeMidday: false,
+    isTimeBeforeMidday: null,
     loading: true,
     currentTime: new Date().toLocaleTimeString()
   }
 
   async componentDidMount() {
-    let response;
+    // let response;
 
-    try {
-      response = await request.get(MEAL_SESSIONS);
-    } catch (error) {
-      // display an error page if this fails
-      response = {}
-    }
+    // try {
+    //   response = await request.get(MEAL_SESSIONS);
+    // } catch (error) {
+    //   // display an error page if this fails
+    //   response = {}
+    // }
+    const isTimeBeforeMidday = is_before_midday()
 
     this.renderClock();
     this.setState({
-      isTimeBeforeMidday: response.beforeMidday,
+      isTimeBeforeMidday,
       loading: false
     }, () => SplashScreen.hide())
   }
@@ -43,14 +45,15 @@ class LandingScreen extends Component {
 
   render() {
     const { isTimeBeforeMidday, loading, currentTime } = this.state;
-    const ctaTitle = "Click To Start Session"
+    const ctaTitle = "Start Session"
 
     return (
       <View style={styles.container}>
         {loading ? <ActivityIndicator size="large" color="#3359DF" /> : <Fragment>
+          <Text style={styles.title}>Welcome to Waitress V2!</Text>
           <TimeDisplay currentTime={currentTime} />
           <LandingInfo isTimeBeforeMidday={isTimeBeforeMidday} />
-          <Button style={{}}>
+          <Button style={styles.buttonContainer}>
             <Text style={styles.buttonText}>{ctaTitle}</Text>
           </Button>
         </Fragment>}
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#f7f7f7',
   },
   instructions: {
     textAlign: 'center',
@@ -72,9 +75,18 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   buttonText: {
-    padding: 20,
-    color: 'green',
-    border: '1px solid #000'
+    padding: 15,
+    color: '#0b0b0b',
+    backgroundColor: '#E8E8E8',
+    borderRadius: 10
+  },
+  buttonContainer: {
+    width: '60px',
+    borderRadius: 20
+  },
+  title: {
+    fontSize: 20,
+    color: '#000'
   }
 });
 

@@ -9,7 +9,7 @@ function TimeDisplay({ currentTime }) {
 const styles = StyleSheet.create({
   timeDisplay: {
     color: '#000',
-    fontSize: 40
+    fontSize: 60
   }
 })
 
