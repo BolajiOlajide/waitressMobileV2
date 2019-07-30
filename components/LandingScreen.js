@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { View, StyleSheet, ActivityIndicator, Text, Modal, Alert, TouchableHighlight } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
+import NfcManager from 'react-native-nfc-manager';
+import LottieView from 'lottie-react-native';
 
 // components
 import LandingInfo from './LandingInfo';
@@ -29,7 +31,9 @@ class LandingScreen extends Component {
     //   // display an error page if this fails
     //   response = {}
     // }
-    const isTimeBeforeMidday = is_before_midday()
+    const isTimeBeforeMidday = is_before_midday();
+
+    NfcManager.isEnabled().then(res => console.log(res));
 
     this.renderClock();
     this.setState({
@@ -61,6 +65,8 @@ class LandingScreen extends Component {
           <Button style={styles.buttonContainer} onPress={this.toggleModal}>
             <Text style={styles.buttonText}>{ctaTitle}</Text>
           </Button>
+          <LottieView source={require('../lottie_animations/7747-loader.json')} />;
+
           <Modal
             animationType="slide"
             transparent
