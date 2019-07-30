@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { View, StyleSheet, ActivityIndicator, Text } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, Text, Modal, Alert, TouchableHighlight } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 
 // components
@@ -16,7 +16,8 @@ class LandingScreen extends Component {
   state = {
     isTimeBeforeMidday: null,
     loading: true,
-    currentTime: new Date().toLocaleTimeString()
+    currentTime: new Date().toLocaleTimeString(),
+    isModalVisible: false
   }
 
   async componentDidMount() {
@@ -43,6 +44,10 @@ class LandingScreen extends Component {
     })
   }, 1000)
 
+  toggleModal = () => {
+    this.setState(prevState => ({ isModalVisible: !prevState.isModalVisible }));
+  }
+
   render() {
     const { isTimeBeforeMidday, loading, currentTime } = this.state;
     const ctaTitle = "Start Session"
@@ -53,9 +58,27 @@ class LandingScreen extends Component {
           <Text style={styles.title}>Welcome to Waitress V2!</Text>
           <TimeDisplay currentTime={currentTime} />
           <LandingInfo isTimeBeforeMidday={isTimeBeforeMidday} />
-          <Button style={styles.buttonContainer}>
+          <Button style={styles.buttonContainer} onPress={this.toggleModal}>
             <Text style={styles.buttonText}>{ctaTitle}</Text>
           </Button>
+          <Modal
+            animationType="slide"
+            transparent
+            visible={this.state.isModalVisible}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+            }}>
+            <View style={{marginTop: 22}}>
+            <View>
+              <Text>Hello World!</Text>
+
+              <TouchableHighlight
+                onPress={this.toggleModal}>
+                <Text>Hide Modal</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+          </Modal>
         </Fragment>}
       </View>
     )

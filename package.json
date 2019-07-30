@@ -12,6 +12,7 @@
     "react": "16.8.3",
     "react-native": "0.59.9",
     "react-native-dotenv": "^0.2.0",
+    "react-native-nfc-manager": "^1.2.2",
     "react-native-splash-screen": "^3.2.0"
   },
   "devDependencies": {
